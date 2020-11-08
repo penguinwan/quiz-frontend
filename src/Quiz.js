@@ -7,14 +7,16 @@ import Questions from "./Questions";
 class Quiz extends Component {
 	constructor(props) {
 		super(props);
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
 		this.handleRegistrationUpdate = this.handleRegistrationUpdate.bind(this);
 		this.handleQuestionCodeUpdate = this.handleQuestionCodeUpdate.bind(this);
+		this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
+		this.handleAgain = this.handleAgain.bind(this);
 		this.state = {
 			showRegistration: true,
 			showQuestionCode: false,
 			showQuestions: false,
+			showEnd: false,
 			nickname: "",
 			sessionid: "",
 			questionCode: "",
@@ -81,19 +83,6 @@ class Quiz extends Component {
 		}
 	}
 
-	handleSubmit() {
-		this.setState({
-			showRegistration: false,
-			showQuestionCode: true,
-			showQuestions: false,
-			nickname: "",
-			sessionid: "",
-			questionCode: null,
-			questions: [],
-			answers: []
-		});
-	}
-
 	handleRegistrationUpdate(nickname) {
 		this.setState({
 			...this.state,
@@ -124,6 +113,32 @@ class Quiz extends Component {
 		})
 	}
 
+	handleQuestionSubmit() {
+		this.setState({
+			...this.state,
+			showRegistration: false,
+			showQuestionCode: false,
+			showQuestions: false,
+			showEnd: true,
+			questionCode: null,
+			questions: [],
+			answers: []
+		});
+	}
+
+	handleAgain() {
+		this.setState({
+			...this.state,
+			showRegistration: false,
+			showQuestionCode: true,
+			showQuestions: false,
+			showEnd: false,
+			questionCode: null,
+			questions: [],
+			answers: []
+		});
+	}
+
 	render() {
 		return(
 
@@ -144,8 +159,14 @@ class Quiz extends Component {
 				<div>
 				<Questions 
 						questionCode={this.state.questionCode} 
-						handleQuestionUpdate={this.handleQuestionUpdate}/>
-				<button onClick={this.handleSubmit}>Submit</button>
+						handleQuestionUpdate={this.handleQuestionUpdate}
+						handleQuestionSubmit={this.handleQuestionSubmit}/>
+				</div>
+			}
+
+			{  this.state.showEnd &&
+				<div>
+					<button onClick={this.handleAgain}>Again</button>
 				</div>
 			}
 			

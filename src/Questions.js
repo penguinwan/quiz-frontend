@@ -6,7 +6,8 @@ class Questions extends Component {
     super(props);
     this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
     this.state = {
-			questions: []
+			questions: [],
+			isError: false
 		};
   }
 
@@ -14,6 +15,7 @@ class Questions extends Component {
 		if(questionCode === '1') {
 			this.setState(
 				{
+					isError: false,
 					questions: [
 						{
 							id: "1",
@@ -41,6 +43,7 @@ class Questions extends Component {
 		} else if(questionCode === '2') {
 			this.setState(
 				{
+					isError: false,
 					questions: [
 						{
 							id: "3",
@@ -65,35 +68,45 @@ class Questions extends Component {
 					]
 				}
 			)
+		} else {
+			this.setState({
+				...this.state,
+				isError: true
+			})
 		}
 	}
 
   componentDidMount() {
-    this.getQuestions(this.props.questionCode);
-  }
+		this.getQuestions(this.props.questionCode);
+	}
+	
+	componentDidUpdate(previousProp) {
+		if(previousProp.questionCode !== this.props.questionCode) {
+			this.getQuestions(this.props.questionCode);
+		}
+	}
 
   handleQuestionUpdate(answer) {
     this.props.handleQuestionUpdate(answer);
   }
 
   render() {
-    return(
-      <div >
-			{ 
-				this.state.questions.length > 0 && 
-				this.state.questions.map(({id, question, answers}) => { 
-				return(
+		let result;
+		if(this.state.isError) {
+			result = <label>No questions</label>;
+		} else {
+			const questions = this.state.questions.map(({id, question, answers}) => {
+				return (
 					<Question 
-						key={id} 
-						id={id} 
+						key={id} id={id} 
 						question={question} 
 						answers={answers} 
 						handleQuestionUpdate={this.handleQuestionUpdate}/>
-				) 
-			})
-			}
-			</div>
-    );
+				);
+			});
+			result  = <div>{questions}<button onClick={this.props.handleQuestionSubmit}>Submit</button></div>
+		}
+    return(<div>{result}</div>);
   }
 
 }
