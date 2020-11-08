@@ -1,0 +1,26 @@
+{
+  "name": "quiz-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.8.6",
+    "@react-navigation/stack": "^5.12.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-native": "^0.63.3",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-reanimated": "^1.13.1",
+    "react-native-safe-area-context": "^3.1.8",
+    "react-native-screens": "^2.13.0",
+    "react-native-web": "^0.14.7",
+    "react-scripts": "0.9.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
