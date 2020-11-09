@@ -8,7 +8,8 @@ class Registration extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       nickname: "",
-      isError: false
+      isError: false,
+      errorMessage: null
     }
   }
 
@@ -19,7 +20,8 @@ class Registration extends Component {
     ).then((response) => {
       this.setState({
         ...this.state,
-        isError: false
+        isError: false,
+        errorMessage: null
       })
       this.props.handleRegistrationUpdate({ 
         nickname: this.state.nickname, 
@@ -28,7 +30,8 @@ class Registration extends Component {
     }).catch((error) => {
       this.setState({
         ...this.state,
-        isError: true
+        isError: true,
+        errorMessage: 'Failed registration. Try again.'
       })
     });
   }
@@ -43,7 +46,7 @@ class Registration extends Component {
   render() {
     return(
       <div>
-        { this.state.isError && <label>Failed registration. Try again.</label> }
+        { this.state.isError && <label>{ this.state.errorMessage }</label> }
         <label>
           Nickname:
           <input type="text" value={this.state.nickname} onChange={this.handleChange} />

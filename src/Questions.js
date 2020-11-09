@@ -5,10 +5,13 @@ import axios from "axios";
 class Questions extends Component {
   constructor(props) {
     super(props);
-    this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
+		this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
+		this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
     this.state = {
 			questions: [],
-			isError: false
+			answers: [],
+			isError: false,
+			errorMessage: null
 		};
   }
 
@@ -16,14 +19,17 @@ class Questions extends Component {
 		axios.get(`http://localhost:8080/batch/${questionCode}/questions`)
 			.then((response) => {
 				this.setState({
+					...this.state,
 					isError: false,
+					errorMessage: null,
 					questions: response.data.questions
 				})
 			})
 			.catch((error) => {
 				this.setState({
 					...this.state,
-					isError: true
+					isError: true,
+					errorMessage: 'Wrong question code.'
 				})
 			});
 	}
@@ -39,13 +45,48 @@ class Questions extends Component {
 	}
 
   handleQuestionUpdate(answer) {
-    this.props.handleQuestionUpdate(answer);
-  }
+		let res = [];
+		if(this.state.answers.find(obj => obj.id === answer.id)) {
+			res = this.state.answers.map(obj => obj.id !== answer.id ? obj : answer);
+		} else {
+			res = [...this.state.answers, answer];
+		}
+
+		this.setState({
+			...this.state,
+			answers: res
+		})
+	}
+	
+	handleQuestionSubmit() {
+		axios.post(
+			`http://localhost:8080/batch/${this.props.questionCode}/answers`,
+			{ sessionid: this.props.sessionid, answers: this.state.answers }
+		).then(() => {
+			this.setState({
+				questions: [],
+				answers: [],
+				isError: false,
+				errorMessage: null
+			});
+			this.props.handleQuestionSubmit();
+		}).catch((error) => {
+			let errorMessage = 'Internal server error.'
+			if(error.response.status === 403) {
+				errorMessage = 'You have submitted answer before.'
+			}
+			this.setState({
+				...this.state,
+				isError: true,
+				errorMessage
+			})
+		})
+	}
 
   render() {
 		let result;
 		if(this.state.isError) {
-			result = <label>No questions</label>;
+		result = <label>{this.state.errorMessage}</label>;
 		} else if(this.state.questions.length > 0) {
 			const questions = this.state.questions.map(({id, question, answers}) => {
 				return (
@@ -56,7 +97,7 @@ class Questions extends Component {
 						handleQuestionUpdate={this.handleQuestionUpdate}/>
 				);
 			});
-			result  = <div>{questions}<button onClick={this.props.handleQuestionSubmit}>Submit</button></div>
+			result  = <div>{questions}<button onClick={this.handleQuestionSubmit}>Submit</button></div>
 		}
     return(<div>{result}</div>);
   }

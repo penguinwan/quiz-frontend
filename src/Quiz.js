@@ -7,11 +7,10 @@ import Questions from "./Questions";
 class Quiz extends Component {
 	constructor(props) {
 		super(props);
-		this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
 		this.handleRegistrationUpdate = this.handleRegistrationUpdate.bind(this);
 		this.handleQuestionCodeUpdate = this.handleQuestionCodeUpdate.bind(this);
 		this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
-		this.handleAgain = this.handleAgain.bind(this);
+		this.handleNext = this.handleNext.bind(this);
 		this.state = {
 			showRegistration: true,
 			showQuestionCode: false,
@@ -20,8 +19,7 @@ class Quiz extends Component {
 			nickname: "",
 			sessionid: "",
 			questionCode: "",
-			questions: [],
-			answers: []
+			questions: []
 		};
 	}
 
@@ -42,20 +40,6 @@ class Quiz extends Component {
 		})
 	}
 
-	handleQuestionUpdate(answer) {
-		let res = [];
-		if(this.state.answers.find(obj => obj.id === answer.id)) {
-			res = this.state.answers.map(obj => obj.id !== answer.id ? obj : answer);
-		} else {
-			res = [...this.state.answers, answer];
-		}
-
-		this.setState({
-			...this.state,
-			answers: res
-		})
-	}
-
 	handleQuestionSubmit() {
 		this.setState({
 			...this.state,
@@ -64,12 +48,11 @@ class Quiz extends Component {
 			showQuestions: false,
 			showEnd: true,
 			questionCode: null,
-			questions: [],
-			answers: []
+			questions: []
 		});
 	}
 
-	handleAgain() {
+	handleNext() {
 		this.setState({
 			...this.state,
 			showRegistration: false,
@@ -77,8 +60,7 @@ class Quiz extends Component {
 			showQuestions: false,
 			showEnd: false,
 			questionCode: null,
-			questions: [],
-			answers: []
+			questions: []
 		});
 	}
 
@@ -103,14 +85,13 @@ class Quiz extends Component {
 				<Questions 
 						sessionid={this.state.sessionid}
 						questionCode={this.state.questionCode} 
-						handleQuestionUpdate={this.handleQuestionUpdate}
 						handleQuestionSubmit={this.handleQuestionSubmit}/>
 				</div>
 			}
 
 			{  this.state.showEnd &&
 				<div>
-					<button onClick={this.handleAgain}>Again</button>
+					<button onClick={this.handleNext}>Next</button>
 				</div>
 			}
 			

@@ -8,7 +8,6 @@ app.use(express.json())
 const port = 8080
 
 app.post('/registration', (req, res) => {
-  // res.sendStatus(500);
   res.send(JSON.stringify({
     sessionid: uuid.v4()
   }))
@@ -66,6 +65,10 @@ app.get('/batch/2/questions', (req, res) => {
       }
     ]
   }));
+})
+
+app.post('/batch/*/answers', (req, res) => {
+  res.sendStatus(200);
 })
 
 app.listen(port, () => {
