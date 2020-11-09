@@ -101,6 +101,7 @@ class Quiz extends Component {
 			{ this.state.showQuestions && 
 				<div>
 				<Questions 
+						sessionid={this.state.sessionid}
 						questionCode={this.state.questionCode} 
 						handleQuestionUpdate={this.handleQuestionUpdate}
 						handleQuestionSubmit={this.handleQuestionSubmit}/>

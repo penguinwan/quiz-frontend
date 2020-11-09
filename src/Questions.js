@@ -46,7 +46,7 @@ class Questions extends Component {
 		let result;
 		if(this.state.isError) {
 			result = <label>No questions</label>;
-		} else {
+		} else if(this.state.questions.length > 0) {
 			const questions = this.state.questions.map(({id, question, answers}) => {
 				return (
 					<Question 
