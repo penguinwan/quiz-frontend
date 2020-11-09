@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel} from '@material-ui/core';
 
 class Question extends Component {
   constructor(props) {
@@ -21,28 +22,20 @@ class Question extends Component {
 
   render() {
     return(
-      <div>
-      <form>
-      <label>
-      {this.props.question}
-      {
-        this.props.answers.map(({key, value}) => {
-          return (
-            <label>
-            <input
-              type="radio"
-              name="answer"
-              value={key}
-              onChange={this.handleChange}
-            />
-            {value}
-          </label>
-          );
-        })
-      }
-      </label>
-      </form>
-      </div>
+      <Box textAlign="center">
+      <FormControl component="fieldset">
+        <FormLabel component="legend">{this.props.question}</FormLabel>
+        <RadioGroup name="answer" onChange={this.handleChange}>
+        {
+          this.props.answers.map(({key, value}) => {
+            return (
+              <FormControlLabel value={key} control={<Radio />} label={value} />
+            );
+          })
+        }
+        </RadioGroup>
+      </FormControl>
+      </Box>
     );
   }
 

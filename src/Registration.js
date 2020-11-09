@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Box, Button, TextField } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class Registration extends Component {
   constructor(props) {
@@ -45,14 +51,11 @@ class Registration extends Component {
 
   render() {
     return(
-      <div>
-        { this.state.isError && <label>{ this.state.errorMessage }</label> }
-        <label>
-          Nickname:
-          <input type="text" value={this.state.nickname} onChange={this.handleChange} />
-        </label>
-        <button onClick={this.handleSubmit}>Done</button>
-      </div>
+      <Box textAlign="center">
+        { this.state.isError && <Alert severity="error">{ this.state.errorMessage }</Alert> }
+        <TextField id="standard-basic" label="Nickname" value={this.state.nickname} onChange={this.handleChange}/>
+        <Button onClick={this.handleSubmit} variant="contained" color="primary">Done</Button>
+      </Box>
     );
   }
 

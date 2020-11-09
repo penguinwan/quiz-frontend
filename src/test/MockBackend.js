@@ -20,20 +20,20 @@ app.get('/batch/1/questions', (req, res) => {
         id: "1",
         question: "abc",
         answers: [
-          { key: "a", value: "A"},
-          { key: "b", value: "B" },
-          { key: "c", value: "C" },
-          { key: "d", value: "D" }
+          { key: "a", value: "i am a"},
+          { key: "b", value: "i am b" },
+          { key: "c", value: "i am c" },
+          { key: "d", value: "i am d" }
         ]
       },
       {
         id: "2",
         question: "efg",
         answers: [
-          { key: "a", value: "A" },
-          { key: "b", value: "B" },
-          { key: "c", value: "C" },
-          { key: "d", value: "D" }
+          { key: "a", value: "i am a" },
+          { key: "b", value: "i am b" },
+          { key: "c", value: "i am c" },
+          { key: "d", value: "i am d" }
         ]
       }
     ]
@@ -47,20 +47,20 @@ app.get('/batch/2/questions', (req, res) => {
         id: "3",
         question: "abc3",
         answers: [
-          { key: "a", value: "A"},
-          { key: "b", value: "B" },
-          { key: "c", value: "C" },
-          { key: "d", value: "D" }
+          { key: "a", value: "i am a"},
+          { key: "b", value: "i am b" },
+          { key: "c", value: "i am c" },
+          { key: "d", value: "i am d" }
         ]
       },
       {
         id: "4",
         question: "efg4",
         answers: [
-          { key: "a", value: "A" },
-          { key: "b", value: "B" },
-          { key: "c", value: "C" },
-          { key: "d", value: "D" }
+          { key: "a", value: "i am a" },
+          { key: "b", value: "i am b" },
+          { key: "c", value: "i am c" },
+          { key: "d", value: "i am d" }
         ]
       }
     ]
@@ -68,6 +68,7 @@ app.get('/batch/2/questions', (req, res) => {
 })
 
 app.post('/batch/*/answers', (req, res) => {
+  console.log(JSON.stringify(req.body));
   res.sendStatus(200);
 })
 

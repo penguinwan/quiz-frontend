@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import Registration from "./Registration";
 import QuestionCode from "./QuestionCode";
 import Questions from "./Questions";
+import { Box, Button } from '@material-ui/core';
 
 class Quiz extends Component {
 	constructor(props) {
@@ -91,7 +92,7 @@ class Quiz extends Component {
 
 			{  this.state.showEnd &&
 				<div>
-					<button onClick={this.handleNext}>Next</button>
+					<Button onClick={this.handleNext} variant="contained" color="primary">Next</Button>
 				</div>
 			}
 			

@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import Question from "./Question";
 import axios from "axios";
+import { Box, Button } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class Questions extends Component {
   constructor(props) {
@@ -86,7 +92,7 @@ class Questions extends Component {
   render() {
 		let result;
 		if(this.state.isError) {
-		result = <label>{this.state.errorMessage}</label>;
+			result = <Alert severity="error">{ this.state.errorMessage }</Alert>;
 		} else if(this.state.questions.length > 0) {
 			const questions = this.state.questions.map(({id, question, answers}) => {
 				return (
@@ -97,7 +103,7 @@ class Questions extends Component {
 						handleQuestionUpdate={this.handleQuestionUpdate}/>
 				);
 			});
-			result  = <div>{questions}<button onClick={this.handleQuestionSubmit}>Submit</button></div>
+			result  = <div>{questions}<Button variant="contained" color="primary" onClick={this.handleQuestionSubmit}>Submit</Button></div>
 		}
     return(<div>{result}</div>);
   }

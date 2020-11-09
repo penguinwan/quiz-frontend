@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Box, Button, TextField } from '@material-ui/core';
 
 class QuestionCode extends Component {
   constructor(props) {
@@ -20,13 +21,10 @@ class QuestionCode extends Component {
 
   render() {
     return(
-      <div>
-        <label>
-          Question code:
-          <input type="text" value={this.state.questionCode} onChange={this.handleChange} />
-        </label>
-        <button onClick={this.handleSubmit}>Start</button>
-      </div>
+      <Box textAlign="center">
+        <TextField id="standard-basic" label="Question code" value={this.state.questionCode} onChange={this.handleChange}/>
+        <Button onClick={this.handleSubmit} variant="contained" color="primary">Start</Button>
+      </Box>
     );
   }
 
