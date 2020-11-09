@@ -25,68 +25,11 @@ class Quiz extends Component {
 		};
 	}
 
-	getQuestions = (questionCode) => {
-		if(questionCode === '1') {
-			this.setState(
-				{
-					questions: [
-						{
-							id: "1",
-							question: "abc",
-							answers: [
-								{ key: "a", value: "A"},
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						},
-						{
-							id: "2",
-							question: "efg",
-							answers: [
-								{ key: "a", value: "A" },
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						}
-					]
-				}
-			)
-		} else if(questionCode === '2') {
-			this.setState(
-				{
-					questions: [
-						{
-							id: "3",
-							question: "abc3",
-							answers: [
-								{ key: "a", value: "A"},
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						},
-						{
-							id: "4",
-							question: "efg4",
-							answers: [
-								{ key: "a", value: "A" },
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						}
-					]
-				}
-			)
-		}
-	}
-
-	handleRegistrationUpdate(nickname) {
+	handleRegistrationUpdate({nickname, sessionid}) {
 		this.setState({
 			...this.state,
 			nickname,
+			sessionid,
 			showQuestionCode: true
 		})
 	}

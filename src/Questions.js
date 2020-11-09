@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Question from "./Question";
+import axios from "axios";
 
 class Questions extends Component {
   constructor(props) {
@@ -11,69 +12,20 @@ class Questions extends Component {
 		};
   }
 
-  getQuestions = (questionCode) => {
-		if(questionCode === '1') {
-			this.setState(
-				{
+	async getQuestions(questionCode) {
+		axios.get(`http://localhost:8080/batch/${questionCode}/questions`)
+			.then((response) => {
+				this.setState({
 					isError: false,
-					questions: [
-						{
-							id: "1",
-							question: "abc",
-							answers: [
-								{ key: "a", value: "A"},
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						},
-						{
-							id: "2",
-							question: "efg",
-							answers: [
-								{ key: "a", value: "A" },
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						}
-					]
-				}
-			)
-		} else if(questionCode === '2') {
-			this.setState(
-				{
-					isError: false,
-					questions: [
-						{
-							id: "3",
-							question: "abc3",
-							answers: [
-								{ key: "a", value: "A"},
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						},
-						{
-							id: "4",
-							question: "efg4",
-							answers: [
-								{ key: "a", value: "A" },
-								{ key: "b", value: "B" },
-								{ key: "c", value: "C" },
-								{ key: "d", value: "D" }
-							]
-						}
-					]
-				}
-			)
-		} else {
-			this.setState({
-				...this.state,
-				isError: true
+					questions: response.data.questions
+				})
 			})
-		}
+			.catch((error) => {
+				this.setState({
+					...this.state,
+					isError: true
+				})
+			});
 	}
 
   componentDidMount() {

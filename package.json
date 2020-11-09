@@ -6,6 +6,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.8.6",
     "@react-navigation/stack": "^5.12.3",
+    "axios": "^0.21.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-native": "^0.63.3",
@@ -14,9 +15,13 @@
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.13.0",
     "react-native-web": "^0.14.7",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "uuid": "^8.3.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
