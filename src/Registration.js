@@ -13,7 +13,7 @@ class Registration extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      nickname: "",
+      nickname: this.props.nickname,
       isError: false,
       errorMessage: null
     }

@@ -78,30 +78,24 @@ class Quiz extends Component {
 
 		<ScrollView>
 			{  this.state.showRegistration &&
-				<div>
-					<Registration isDisabled={this.state.isRegistrationDisabled} handleRegistrationUpdate={this.handleRegistrationUpdate}/>
-				</div>
+				<Registration nickname={this.state.nickname} isDisabled={this.state.isRegistrationDisabled} handleRegistrationUpdate={this.handleRegistrationUpdate}/>
 			}
 			{
 				this.state.showQuestionCode && 
-				<div>
-					<QuestionCode isDisabled={this.state.isQuestionCodeDisabled} handleQuestionCodeUpdate={this.handleQuestionCodeUpdate}/>
-				</div>
+				<QuestionCode isDisabled={this.state.isQuestionCodeDisabled} handleQuestionCodeUpdate={this.handleQuestionCodeUpdate}/>
 			}
 			
 			{ this.state.showQuestions && 
-				<div>
 				<Questions 
-						sessionid={this.state.sessionid}
-						questionCode={this.state.questionCode} 
-						handleQuestionSubmit={this.handleQuestionSubmit}/>
-				</div>
+					sessionid={this.state.sessionid}
+					questionCode={this.state.questionCode} 
+					handleQuestionSubmit={this.handleQuestionSubmit}/>
 			}
 
 			{  this.state.showEnd &&
-				<div>
+				<Box textAlign="center" m={2} p={3}>
 					<Button onClick={this.handleNext} variant="contained" color="primary">Next</Button>
-				</div>
+				</Box>
 			}
 			
 		</ScrollView>
