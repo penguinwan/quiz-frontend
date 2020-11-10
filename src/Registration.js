@@ -51,10 +51,10 @@ class Registration extends Component {
 
   render() {
     return(
-      <Box textAlign="center">
+      <Box m={2}>
         { this.state.isError && <Alert severity="error">{ this.state.errorMessage }</Alert> }
-        <TextField id="standard-basic" label="Nickname" value={this.state.nickname} onChange={this.handleChange}/>
-        <Button onClick={this.handleSubmit} variant="contained" color="primary">Done</Button>
+        <TextField id="standard-basic" label="Nickname" value={this.state.nickname} onChange={this.handleChange} disabled={this.props.isDisabled}/>
+        { !this.props.isDisabled && <Button onClick={this.handleSubmit} variant="contained" color="primary">Done</Button> }
       </Box>
     );
   }

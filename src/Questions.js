@@ -105,7 +105,7 @@ class Questions extends Component {
 			});
 			result  = <div>{questions}<Button variant="contained" color="primary" onClick={this.handleQuestionSubmit}>Submit</Button></div>
 		}
-    return(<div>{result}</div>);
+    return(<Box m={2}>{result}</Box>);
   }
 
 }

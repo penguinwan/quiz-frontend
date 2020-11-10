@@ -21,9 +21,9 @@ class QuestionCode extends Component {
 
   render() {
     return(
-      <Box textAlign="center">
-        <TextField id="standard-basic" label="Question code" value={this.state.questionCode} onChange={this.handleChange}/>
-        <Button onClick={this.handleSubmit} variant="contained" color="primary">Start</Button>
+      <Box m={2}>
+        <TextField id="standard-basic" label="Question code" value={this.state.questionCode} onChange={this.handleChange} disabled={this.props.isDisabled}/>
+        { !this.props.isDisabled && <Button onClick={this.handleSubmit} variant="contained" color="primary">Start</Button> }
       </Box>
     );
   }

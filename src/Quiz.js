@@ -14,7 +14,9 @@ class Quiz extends Component {
 		this.handleNext = this.handleNext.bind(this);
 		this.state = {
 			showRegistration: true,
+			isRegistrationDisabled: false,
 			showQuestionCode: false,
+			isQuestionCodeDisabled: false,
 			showQuestions: false,
 			showEnd: false,
 			nickname: "",
@@ -29,6 +31,7 @@ class Quiz extends Component {
 			...this.state,
 			nickname,
 			sessionid,
+			isRegistrationDisabled: true,
 			showQuestionCode: true
 		})
 	}
@@ -37,7 +40,8 @@ class Quiz extends Component {
 		this.setState({
 			...this.state,
 			questionCode,
-			showQuestions: true
+			showQuestions: true,
+			isQuestionCodeDisabled: true,
 		})
 	}
 
@@ -45,7 +49,9 @@ class Quiz extends Component {
 		this.setState({
 			...this.state,
 			showRegistration: false,
+			isRegistrationDisabled: false,
 			showQuestionCode: false,
+			isQuestionCodeDisabled: false,
 			showQuestions: false,
 			showEnd: true,
 			questionCode: null,
@@ -56,8 +62,10 @@ class Quiz extends Component {
 	handleNext() {
 		this.setState({
 			...this.state,
-			showRegistration: false,
+			showRegistration: true,
+			isRegistrationDisabled: true,
 			showQuestionCode: true,
+			isQuestionCodeDisabled: false,
 			showQuestions: false,
 			showEnd: false,
 			questionCode: null,
@@ -71,13 +79,13 @@ class Quiz extends Component {
 		<ScrollView>
 			{  this.state.showRegistration &&
 				<div>
-					<Registration handleRegistrationUpdate={this.handleRegistrationUpdate}/>
+					<Registration isDisabled={this.state.isRegistrationDisabled} handleRegistrationUpdate={this.handleRegistrationUpdate}/>
 				</div>
 			}
 			{
 				this.state.showQuestionCode && 
 				<div>
-					<QuestionCode handleQuestionCodeUpdate={this.handleQuestionCodeUpdate}/>
+					<QuestionCode isDisabled={this.state.isQuestionCodeDisabled} handleQuestionCodeUpdate={this.handleQuestionCodeUpdate}/>
 				</div>
 			}
 			

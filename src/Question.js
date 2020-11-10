@@ -22,7 +22,7 @@ class Question extends Component {
 
   render() {
     return(
-      <Box textAlign="center">
+      <Box textAlign="left" boxShadow={1} p={2} b={3}>
       <FormControl component="fieldset">
         <FormLabel component="legend">{this.props.question}</FormLabel>
         <RadioGroup name="answer" onChange={this.handleChange}>
