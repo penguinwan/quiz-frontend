@@ -1,3 +1,4 @@
+import { basepath } from './env'
 import React, { Component } from "react";
 import axios from "axios";
 import { Box, Button, TextField } from '@material-ui/core';
@@ -21,7 +22,7 @@ class Registration extends Component {
 
   handleSubmit() {
     axios.post(
-      'http://localhost:8080/registration',
+      `${basepath}/participants`,
       { nickname: this.state.nickname }
     ).then((response) => {
       this.setState({
@@ -31,7 +32,7 @@ class Registration extends Component {
       })
       this.props.handleRegistrationUpdate({ 
         nickname: this.state.nickname, 
-        sessionid: response.data.sessionid
+        sessionid: response.data.session_id
       });
     }).catch((error) => {
       this.setState({
