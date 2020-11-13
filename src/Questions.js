@@ -1,3 +1,4 @@
+import { BATCH_PATH } from './env'
 import React, { Component } from "react";
 import Question from "./Question";
 import axios from "axios";
@@ -22,8 +23,9 @@ class Questions extends Component {
   }
 
 	async getQuestions(questionCode) {
-		axios.get(`http://localhost:8080/batch/${questionCode}/questions`)
+		axios.get(`${BATCH_PATH}/batches/${questionCode}`)
 			.then((response) => {
+				console.log('data'+JSON.stringify(response.data));
 				this.setState({
 					...this.state,
 					isError: false,
@@ -32,11 +34,19 @@ class Questions extends Component {
 				})
 			})
 			.catch((error) => {
-				this.setState({
-					...this.state,
-					isError: true,
-					errorMessage: 'Wrong question code.'
-				})
+				if(error.response.status === 404) {
+					this.setState({
+						...this.state,
+						isError: true,
+						errorMessage: 'Wrong question code.'
+					})
+				} else {
+					this.setState({
+						...this.state,
+						isError: true,
+						errorMessage: 'Server error.'
+					})
+				}
 			});
 	}
 

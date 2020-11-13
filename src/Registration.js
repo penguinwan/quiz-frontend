@@ -1,4 +1,4 @@
-import { basepath } from './env'
+import { PARTICIPANT_PATH } from './env'
 import React, { Component } from "react";
 import axios from "axios";
 import { Box, Button, TextField } from '@material-ui/core';
@@ -22,7 +22,7 @@ class Registration extends Component {
 
   handleSubmit() {
     axios.post(
-      `${basepath}/participants`,
+      `${PARTICIPANT_PATH}/participants`,
       { nickname: this.state.nickname }
     ).then((response) => {
       this.setState({
