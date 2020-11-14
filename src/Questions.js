@@ -1,4 +1,4 @@
-import { BATCH_PATH } from './env'
+import { BATCH_PATH, RESULT_PATH } from './env'
 import React, { Component } from "react";
 import Question from "./Question";
 import axios from "axios";
@@ -76,8 +76,8 @@ class Questions extends Component {
 	
 	handleQuestionSubmit() {
 		axios.post(
-			`http://localhost:8080/batch/${this.props.questionCode}/answers`,
-			{ sessionid: this.props.sessionid, answers: this.state.answers }
+			`${RESULT_PATH}/answers`,
+			{ batch_id: this.props.questionCode, session_id: this.props.sessionid, answers: this.state.answers }
 		).then(() => {
 			this.setState({
 				questions: [],
