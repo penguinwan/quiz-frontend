@@ -22,7 +22,8 @@ class Questions extends Component {
 			answers: [],
 			isError: false,
 			errorMessage: null,
-			isQuestionCodeDisabled: false
+			isQuestionCodeDisabled: false,
+			questionReceivedTimestamp: null
 		};
   }
 
@@ -34,7 +35,8 @@ class Questions extends Component {
 					isError: false,
 					errorMessage: null,
 					questions: response.data.questions,
-					isQuestionCodeDisabled: true
+					isQuestionCodeDisabled: true,
+					questionReceivedTimestamp: Date.now()
 				})
 			})
 			.catch((error) => {
@@ -43,6 +45,7 @@ class Questions extends Component {
 						...this.state,
 						isError: true,
 						errorMessage: 'Wrong question code.',
+						questions: [],
 						isQuestionCodeDisabled: false
 					})
 				} else {
@@ -50,6 +53,7 @@ class Questions extends Component {
 						...this.state,
 						isError: true,
 						errorMessage: 'Server error.',
+						questions: [],
 						isQuestionCodeDisabled: false
 					})
 				}
@@ -82,9 +86,15 @@ class Questions extends Component {
 	}
 	
 	handleQuestionSubmit() {
+		const response_time = Date.now() - this.state.questionReceivedTimestamp;
 		axios.post(
 			`${RESULT_PATH}/answers`,
-			{ batch_id: this.state.questionCode, session_id: this.props.sessionid, answers: this.state.answers }
+			{ 
+				batch_id: this.state.questionCode, 
+				session_id: this.props.sessionid, 
+				answers: this.state.answers, 
+				response_time 
+			}
 		).then(() => {
 			this.setState({
 				questions: [],
