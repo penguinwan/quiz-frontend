@@ -23,9 +23,8 @@ class Questions extends Component {
   }
 
 	async getQuestions(questionCode) {
-		axios.get(`${BATCH_PATH}/batches/${questionCode}`)
+		axios.get(`${BATCH_PATH}/batches/${questionCode.toLowerCase()}`)
 			.then((response) => {
-				console.log('data'+JSON.stringify(response.data));
 				this.setState({
 					...this.state,
 					isError: false,
