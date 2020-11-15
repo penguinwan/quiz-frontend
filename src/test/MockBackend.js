@@ -7,18 +7,20 @@ app.use(cors());
 app.use(express.json())
 const port = 8080
 
-app.post('/registration', (req, res) => {
+app.post('/participants', (req, res) => {
   res.send(JSON.stringify({
-    sessionid: uuid.v4()
+    session_id: uuid.v4(),
+    nickname: req.body.nickname
   }))
 })
 
-app.get('/batch/1/questions', (req, res) => {
+app.get('/batches/abc', (req, res) => {
   res.send(JSON.stringify({
     questions: [
       {
         id: "1",
-        question: "abc",
+        question: "abqqqqqqqqqqq qqqqqqqqqqq qqqqqqqqqq qqqqqq qqqqqqqqqqq qqqqqqqqqqq qqqqq qqqqqq qqq qqqqq qqqqq qqqqq qqq qqq",
+        correct: "b",
         answers: [
           { key: "a", value: "i am a"},
           { key: "b", value: "i am b" },
@@ -29,6 +31,7 @@ app.get('/batch/1/questions', (req, res) => {
       {
         id: "2",
         question: "efg",
+        correct: "c",
         answers: [
           { key: "a", value: "i am a" },
           { key: "b", value: "i am b" },
@@ -40,12 +43,13 @@ app.get('/batch/1/questions', (req, res) => {
   }));
 })
 
-app.get('/batch/2/questions', (req, res) => {
+app.get('/batches/ghc', (req, res) => {
   res.send(JSON.stringify({
     questions: [
       {
-        id: "3",
+        id: "1",
         question: "abc3",
+        correct: "d",
         answers: [
           { key: "a", value: "i am a"},
           { key: "b", value: "i am b" },
@@ -54,8 +58,9 @@ app.get('/batch/2/questions', (req, res) => {
         ]
       },
       {
-        id: "4",
+        id: "2",
         question: "efg4",
+        correct: "a",
         answers: [
           { key: "a", value: "i am a" },
           { key: "b", value: "i am b" },
@@ -67,7 +72,7 @@ app.get('/batch/2/questions', (req, res) => {
   }));
 })
 
-app.post('/batch/*/answers', (req, res) => {
+app.post('/answers', (req, res) => {
   console.log(JSON.stringify(req.body));
   res.sendStatus(200);
 })

@@ -2,7 +2,7 @@ import { BATCH_PATH, RESULT_PATH } from './env'
 import React, { Component } from "react";
 import Question from "./Question";
 import axios from "axios";
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function Alert(props) {
@@ -14,11 +14,15 @@ class Questions extends Component {
     super(props);
 		this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
 		this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
+		this.handleQuestionCodeUpdate = this.handleQuestionCodeUpdate.bind(this);
+		this.handleQuestionCodeSubmit = this.handleQuestionCodeSubmit.bind(this);
     this.state = {
+			questionCode: "",
 			questions: [],
 			answers: [],
 			isError: false,
-			errorMessage: null
+			errorMessage: null,
+			isQuestionCodeDisabled: false
 		};
   }
 
@@ -29,7 +33,8 @@ class Questions extends Component {
 					...this.state,
 					isError: false,
 					errorMessage: null,
-					questions: response.data.questions
+					questions: response.data.questions,
+					isQuestionCodeDisabled: true
 				})
 			})
 			.catch((error) => {
@@ -37,26 +42,29 @@ class Questions extends Component {
 					this.setState({
 						...this.state,
 						isError: true,
-						errorMessage: 'Wrong question code.'
+						errorMessage: 'Wrong question code.',
+						isQuestionCodeDisabled: false
 					})
 				} else {
 					this.setState({
 						...this.state,
 						isError: true,
-						errorMessage: 'Server error.'
+						errorMessage: 'Server error.',
+						isQuestionCodeDisabled: false
 					})
 				}
 			});
 	}
 
-  componentDidMount() {
-		this.getQuestions(this.props.questionCode);
-	}
-	
-	componentDidUpdate(previousProp) {
-		if(previousProp.questionCode !== this.props.questionCode) {
-			this.getQuestions(this.props.questionCode);
-		}
+	handleQuestionCodeUpdate(event) {
+    this.setState({
+      ...this.state,
+      questionCode: event.target.value
+    });
+  }
+
+	handleQuestionCodeSubmit() {
+		this.getQuestions(this.state.questionCode);
 	}
 
   handleQuestionUpdate(answer) {
@@ -76,7 +84,7 @@ class Questions extends Component {
 	handleQuestionSubmit() {
 		axios.post(
 			`${RESULT_PATH}/answers`,
-			{ batch_id: this.props.questionCode, session_id: this.props.sessionid, answers: this.state.answers }
+			{ batch_id: this.state.questionCode, session_id: this.props.sessionid, answers: this.state.answers }
 		).then(() => {
 			this.setState({
 				questions: [],
@@ -114,7 +122,15 @@ class Questions extends Component {
 			});
 			result  = <div>{questions}<Button variant="contained" color="primary" onClick={this.handleQuestionSubmit}>Submit</Button></div>
 		}
-    return(<Box m={2}>{result}</Box>);
+    return(
+			<div>
+			<Box m={2}>
+        <TextField id="standard-basic" label="Question code" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
+				{ !this.state.isQuestionCodeDisabled && <Button onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
+      </Box>
+			<Box m={2}>{result}</Box>
+			</div>
+		);
   }
 
 }
