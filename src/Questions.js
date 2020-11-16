@@ -105,9 +105,6 @@ class Questions extends Component {
 			this.props.handleQuestionSubmit();
 		}).catch((error) => {
 			let errorMessage = 'Internal server error.'
-			if(error.response.status === 403) {
-				errorMessage = 'You have submitted answer before.'
-			}
 			this.setState({
 				...this.state,
 				isError: true,

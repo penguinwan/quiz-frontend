@@ -62,7 +62,9 @@ Resources:
             Fn::Join:
             - ''
             - - Ref: S3Bucket
-              - .s3.eu-central-1.amazonaws.com
+              - .s3.
+              - Ref: AWS::Region
+              - .amazonaws.com
           Id: s3origin
           S3OriginConfig:
             OriginAccessIdentity:

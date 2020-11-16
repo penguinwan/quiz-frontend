@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ScrollView } from 'react-native';
 import Registration from "./Registration";
 import Questions from "./Questions";
-import { Box, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Box, Button } from '@material-ui/core';
 
 class Quiz extends Component {
 	constructor(props) {
@@ -54,6 +54,11 @@ class Quiz extends Component {
 		return(
 
 		<ScrollView>
+			<AppBar position="static">
+			<Toolbar>
+			<Typography variant="h6">Quiz</Typography>
+			</Toolbar>
+			</AppBar>
 			{  this.state.showRegistration &&
 				<Registration nickname={this.state.nickname} isDisabled={this.state.isRegistrationDisabled} handleRegistrationUpdate={this.handleRegistrationUpdate}/>
 			}
