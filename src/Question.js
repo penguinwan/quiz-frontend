@@ -29,7 +29,7 @@ class Question extends Component {
         {
           this.props.answers.map(({key, value}) => {
             return (
-              <FormControlLabel value={key} control={<Radio />} label={value} />
+              <FormControlLabel key={key} value={key} control={<Radio />} label={value} />
             );
           })
         }
