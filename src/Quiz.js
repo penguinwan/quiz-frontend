@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { ScrollView } from 'react-native';
 import Registration from "./Registration";
 import Questions from "./Questions";
 import { AppBar, Toolbar, Typography, Box, Button } from '@material-ui/core';
@@ -53,7 +52,7 @@ class Quiz extends Component {
 	render() {
 		return(
 
-		<ScrollView>
+		<div>
 			<AppBar position="static">
 			<Toolbar>
 			<Typography variant="h6">Quiz</Typography>
@@ -75,7 +74,7 @@ class Quiz extends Component {
 				</Box>
 			}
 			
-		</ScrollView>
+		</div>
 		);
 	}
 }

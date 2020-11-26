@@ -26,6 +26,7 @@ app.post('/participants', (req, res) => {
 app.get('/batches/abc', (req, res) => {
   reply(() => {
     res.send(JSON.stringify({
+      allowed_time: 4000,
       questions: [
         {
           id: "1",
@@ -57,6 +58,7 @@ app.get('/batches/abc', (req, res) => {
 app.get('/batches/ghc', (req, res) => {
   reply(() => {
     res.send(JSON.stringify({
+      allowedTime: 2000,
       questions: [
         {
           id: "1",

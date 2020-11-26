@@ -2,12 +2,14 @@ import { BATCH_PATH, RESULT_PATH } from './env'
 import React, { Component } from "react";
 import Question from "./Question";
 import axios from "axios";
-import { Box, Button, TextField } from '@material-ui/core';
+import { Box, Button, TextField, Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+const REMAINING_TIME = 3;
 
 class Questions extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class Questions extends Component {
 		this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
 		this.handleQuestionCodeUpdate = this.handleQuestionCodeUpdate.bind(this);
 		this.handleQuestionCodeSubmit = this.handleQuestionCodeSubmit.bind(this);
+		this.handleReminderClosed = this.handleReminderClosed.bind(this);
     this.state = {
 			questionCode: "",
 			questions: [],
@@ -23,9 +26,25 @@ class Questions extends Component {
 			isError: false,
 			errorMessage: null,
 			isQuestionCodeDisabled: false,
-			questionReceivedTimestamp: null
+			questionReceivedTimestamp: null,
+			allowedTime: null,
+			isReminderOpen: false
 		};
-  }
+	}
+	
+	handleReminderOpen() {
+		this.setState({
+			...this.state,
+			isReminderOpen: true
+		})
+	}
+
+	handleReminderClosed() {
+		this.setState({
+			...this.state,
+			isReminderOpen: false
+		})
+	}
 
 	async getQuestions(questionCode) {
 		axios.get(`${BATCH_PATH}/batches/${questionCode.toLowerCase()}`)
@@ -35,9 +54,18 @@ class Questions extends Component {
 					isError: false,
 					errorMessage: null,
 					questions: response.data.questions,
+					allowedTime: response.data.allowed_time,
 					isQuestionCodeDisabled: true,
 					questionReceivedTimestamp: Date.now()
 				})
+
+				setTimeout(() => {
+					this.handleReminderOpen();
+				}, (this.state.allowedTime - REMAINING_TIME * 1000));
+
+				setTimeout(() => {
+					this.handleQuestionSubmit();
+				}, this.state.allowedTime);
 			})
 			.catch((error) => {
 				if(error.response.status === 404) {
@@ -46,6 +74,7 @@ class Questions extends Component {
 						isError: true,
 						errorMessage: 'Wrong question code.',
 						questions: [],
+						allowedTime: null,
 						isQuestionCodeDisabled: false
 					})
 				} else {
@@ -54,6 +83,7 @@ class Questions extends Component {
 						isError: true,
 						errorMessage: 'Server error.',
 						questions: [],
+						allowedTime: null,
 						isQuestionCodeDisabled: false
 					})
 				}
@@ -132,10 +162,13 @@ class Questions extends Component {
     return(
 			<div>
 			<Box m={2}>
-        <TextField id="standard-basic" label="Type in answer to unlock new set of question" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
+        <TextField id="standard-basic" autoComplete="off" label="Key" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
 				{ !this.state.isQuestionCodeDisabled && <Button onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
       </Box>
 			<Box m={2}>{result}</Box>
+			<Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "center" }} key="snackbar" open={this.state.isReminderOpen} autoHideDuration={1000} onClose={this.handleReminderClosed}>
+				<Alert severity="warning">You still have {REMAINING_TIME} seconds</Alert>
+			</Snackbar>
 			</div>
 		);
   }

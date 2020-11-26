@@ -54,7 +54,7 @@ class Registration extends Component {
     return(
       <Box m={2}>
         { this.state.isError && <Alert severity="error">{ this.state.errorMessage }</Alert> }
-        <TextField id="standard-basic" label="Nickname" value={this.state.nickname} onChange={this.handleChange} disabled={this.props.isDisabled}/>
+        <TextField id="standard-basic" label="Nickname" value={this.state.nickname} onChange={this.handleChange} disabled={this.props.isDisabled} autoComplete="off"/>
         { !this.props.isDisabled && <Button onClick={this.handleSubmit} variant="contained" color="primary">Done</Button> }
       </Box>
     );
