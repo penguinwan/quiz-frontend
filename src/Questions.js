@@ -132,7 +132,7 @@ class Questions extends Component {
     return(
 			<div>
 			<Box m={2}>
-        <TextField id="standard-basic" label="Question code" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
+        <TextField id="standard-basic" label="Type in answer to unlock new set of question" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
 				{ !this.state.isQuestionCodeDisabled && <Button onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
       </Box>
 			<Box m={2}>{result}</Box>
