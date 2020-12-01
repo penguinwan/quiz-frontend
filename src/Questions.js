@@ -13,7 +13,9 @@ const REMAINING_TIME = 3;
 
 class Questions extends Component {
   constructor(props) {
-    super(props);
+		super(props);
+		this.submitTimeout = null;
+		this.reminderTimout = null;
 		this.handleQuestionUpdate = this.handleQuestionUpdate.bind(this);
 		this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
 		this.handleQuestionCodeUpdate = this.handleQuestionCodeUpdate.bind(this);
@@ -59,11 +61,11 @@ class Questions extends Component {
 					questionReceivedTimestamp: Date.now()
 				})
 
-				setTimeout(() => {
+				this.reminderTimeout = setTimeout(() => {
 					this.handleReminderOpen();
 				}, (this.state.allowedTime - REMAINING_TIME * 1000));
 
-				setTimeout(() => {
+				this.submitTimeout = setTimeout(() => {
 					this.handleQuestionSubmit();
 				}, this.state.allowedTime);
 			})
@@ -141,6 +143,11 @@ class Questions extends Component {
 				errorMessage
 			})
 		})
+	}
+
+	componentWillUnmount() {
+		clearTimeout(this.reminderTimeout);
+		clearTimeout(this.submitTimeout);
 	}
 
   render() {
