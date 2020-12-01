@@ -26,9 +26,14 @@ $(find_url):
 .PHONY: replace_api_url
 replace_api_url: $(find_url)
 
+TYPE_.html=text/html
+TYPE_.json=application/json
+TYPE_.js=text/javascript
+TYPE_.map=application/text
+
 .PHONY: $(file_targets) 
 $(file_targets):
-	aws s3api put-object --bucket com.penguinwan.quiz --content-type text/html --key $(shell echo $@ | sed 's/build\///') --body $@ &> /dev/null
+	aws s3api put-object --bucket com.penguinwan.quiz --content-type $(TYPE_$(suffix $@)) --key $(shell echo $@ | sed 's/build\///') --body $@ &> /dev/null
 	sleep 3
 
 .PHONY: deploy_frontend
