@@ -41,7 +41,11 @@ class Questions extends Component {
 		})
 	}
 
-	handleReminderClosed() {
+	handleReminderClosed(event, reason) {
+		if (reason === 'clickaway') {
+      return;
+		}
+		
 		this.setState({
 			...this.state,
 			isReminderOpen: false
@@ -173,7 +177,12 @@ class Questions extends Component {
 				{ !this.state.isQuestionCodeDisabled && <Button onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
       </Box>
 			<Box m={2}>{result}</Box>
-			<Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "center" }} key="snackbar" open={this.state.isReminderOpen} autoHideDuration={1000} onClose={this.handleReminderClosed}>
+			<Snackbar 
+				anchorOrigin={{ vertical: "bottom", horizontal: "center" }} 
+				key="snackbar" 
+				open={this.state.isReminderOpen} 
+				autoHideDuration={REMAINING_TIME*1000} 
+				onClose={this.handleReminderClosed}>
 				<Alert severity="warning">You still have {REMAINING_TIME} seconds</Alert>
 			</Snackbar>
 			</div>
