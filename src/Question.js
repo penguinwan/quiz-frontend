@@ -21,15 +21,17 @@ class Question extends Component {
   }
 
   render() {
+    const radioGroupId = 'question['+this.state.id+']';
     return(
       <Box textAlign="left" boxShadow={1} p={2} b={3}>
       <FormControl component="fieldset">
         <FormLabel component="legend">{this.props.question}</FormLabel>
-        <RadioGroup name="answer" onChange={this.handleChange}>
+        <RadioGroup id={radioGroupId} name="answer" onChange={this.handleChange}>
         {
           this.props.answers.map(({key, value}) => {
+            const radioName = 'question['+this.state.id+']answer['+key+']';
             return (
-              <FormControlLabel key={key} value={key} control={<Radio />} label={value} />
+              <FormControlLabel key={key} value={key} control={<Radio name={radioName}/>} label={value} />
             );
           })
         }

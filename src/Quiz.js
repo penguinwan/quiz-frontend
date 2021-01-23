@@ -70,7 +70,7 @@ class Quiz extends Component {
 
 			{  this.state.showEnd &&
 				<Box textAlign="center" m={2} p={3}>
-					<Button onClick={this.handleNext} variant="contained" color="primary">Next</Button>
+					<Button id="next-submit" onClick={this.handleNext} variant="contained" color="primary">Next</Button>
 				</Box>
 			}
 			

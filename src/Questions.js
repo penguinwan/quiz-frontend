@@ -168,13 +168,13 @@ class Questions extends Component {
 						handleQuestionUpdate={this.handleQuestionUpdate}/>
 				);
 			});
-			result  = <div>{questions}<Button variant="contained" color="primary" onClick={this.handleQuestionSubmit}>Submit</Button></div>
+			result  = <div>{questions}<Button id="questions-submit" variant="contained" color="primary" onClick={this.handleQuestionSubmit}>Submit</Button></div>
 		}
     return(
 			<div>
 			<Box m={2}>
-        <TextField id="standard-basic" autoComplete="off" label="Key" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
-				{ !this.state.isQuestionCodeDisabled && <Button onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
+        <TextField id="txtKey" autoComplete="off" label="Key" value={this.state.questionCode} onChange={this.handleQuestionCodeUpdate} disabled={this.state.isQuestionCodeDisabled}/>
+				{ !this.state.isQuestionCodeDisabled && <Button id="key-submit" onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
       </Box>
 			<Box m={2}>{result}</Box>
 			<Snackbar 
