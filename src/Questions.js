@@ -122,6 +122,9 @@ class Questions extends Component {
 	}
 	
 	handleQuestionSubmit() {
+		clearTimeout(this.reminderTimeout);
+		clearTimeout(this.submitTimeout);
+
 		const response_time = Date.now() - this.state.questionReceivedTimestamp;
 		axios.post(
 			`${RESULT_PATH}/answers`,
