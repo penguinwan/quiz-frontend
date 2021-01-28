@@ -1,5 +1,6 @@
 import { BATCH_PATH, RESULT_PATH } from './env'
 import React, { Component } from "react";
+import styled from 'styled-components';
 import Question from "./Question";
 import axios from "axios";
 import { Box, Button, TextField, Snackbar } from '@material-ui/core';
@@ -8,6 +9,11 @@ import MuiAlert from '@material-ui/lab/Alert';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+const Underneath = styled.div`
+	position: fixed;
+	z-index: -1;
+`;
 
 const REMAINING_TIME = 3;
 
@@ -180,14 +186,16 @@ class Questions extends Component {
 				{ !this.state.isQuestionCodeDisabled && <Button id="key-submit" onClick={this.handleQuestionCodeSubmit} variant="contained" color="primary">Start</Button> }
       </Box>
 			<Box m={2}>{result}</Box>
-			<Snackbar 
-				anchorOrigin={{ vertical: "bottom", horizontal: "center" }} 
-				key="snackbar" 
-				open={this.state.isReminderOpen} 
-				autoHideDuration={REMAINING_TIME*1000} 
-				onClose={this.handleReminderClosed}>
-				<Alert severity="warning">You still have {REMAINING_TIME} seconds</Alert>
-			</Snackbar>
+			<Underneath>
+				<Snackbar
+					anchorOrigin={{ vertical: "bottom", horizontal: "center" }} 
+					key="snackbar" 
+					open={this.state.isReminderOpen} 
+					autoHideDuration={REMAINING_TIME*1000} 
+					onClose={this.handleReminderClosed}>
+					<Alert severity="warning">You still have {REMAINING_TIME} seconds</Alert>
+				</Snackbar>
+			</Underneath>
 			</div>
 		);
   }
